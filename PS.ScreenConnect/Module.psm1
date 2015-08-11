@@ -2,9 +2,9 @@ function Update-ScreenConnectServer
 {
 <#
 .Synopsis
-   Used to update the ScreenConnect server.
+   Used to update a ScreenConnect server.
 .DESCRIPTION
-   Used to update the ScreenConnect server to either the latest stable or pre-release.
+   Used to update a ScreenConnect server to either the latest stable or pre-release.
 .EXAMPLE
    Example of how to use this cmdlet
 .EXAMPLE
