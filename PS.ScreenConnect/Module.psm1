@@ -196,7 +196,13 @@ function Start-LTProcess
         [Parameter(Mandatory=$false,
                    Position=2)]
         [int32]
-        $TimeOut = 600000
+        $TimeOut = 600000,
+
+		# Switch to silence output.
+        [Parameter(Mandatory=$false,
+                   Position=2)]
+		[boolean]
+		$Silent = $false
     )
 
     Begin
@@ -226,24 +232,36 @@ function Start-LTProcess
             until ($process.HasExited -or -not $process.WaitForExit($TimeOut))
             if($process.ExitCode -eq 0)
             {
-                Write-Output "The $($FilePath.Substring($FilePath.LastIndexOf('\') + 1)) file has installed successfully."
+				if(!$Silent)
+				{
+					Write-Output "The $($FilePath.Substring($FilePath.LastIndexOf('\') + 1)) file has installed successfully."
+				}
             }
             else
             {
                 $process.Kill()
-                Write-Output "The $($FilePath.Substring($FilePath.LastIndexOf('\') + 1)) file did not install, please install manually."
+				if(!$Silent)
+				{
+					Write-Output "The $($FilePath.Substring($FilePath.LastIndexOf('\') + 1)) file did not install, please install manually."
+				}
             }
         }
         catch [System.Exception]
         {
             if($process.HasExited)
             {
-                Write-Output "The $($FilePath.Substring($FilePath.LastIndexOf('\') + 1)) file did not install, please install manually."
+				if(!$Silent)
+				{
+					Write-Output "The $($FilePath.Substring($FilePath.LastIndexOf('\') + 1)) file did not install, please install manually."
+				}
             }
             else
             {
                 $process.Kill()
-                Write-Output "The $($FilePath.Substring($FilePath.LastIndexOf('\') + 1)) file did not install, please install manually."
+				if(!$Silent)
+				{
+					Write-Output "The $($FilePath.Substring($FilePath.LastIndexOf('\') + 1)) file did not install, please install manually."
+				}
             }
         }
     }
