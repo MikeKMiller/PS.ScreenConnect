@@ -148,7 +148,7 @@ function Update-ScreenConnectServer
     }
     End
     {
-			
+		Write-Verbose "Actions complete."
     }
 }
 
@@ -200,9 +200,9 @@ function Start-LTProcess
 
 		# Switch to silence output.
         [Parameter(Mandatory=$false,
-                   Position=2)]
-		[boolean]
-		$Silent = $false
+                   Position=3)]
+		[switch]
+		$Silent
     )
 
     Begin
@@ -232,7 +232,7 @@ function Start-LTProcess
             until ($process.HasExited -or -not $process.WaitForExit($TimeOut))
             if($process.ExitCode -eq 0)
             {
-				if(!$Silent)
+				if($Silent)
 				{
 					Write-Output "The $($FilePath.Substring($FilePath.LastIndexOf('\') + 1)) file has installed successfully."
 				}
@@ -240,7 +240,7 @@ function Start-LTProcess
             else
             {
                 $process.Kill()
-				if(!$Silent)
+				if($Silent)
 				{
 					Write-Output "The $($FilePath.Substring($FilePath.LastIndexOf('\') + 1)) file did not install, please install manually."
 				}
@@ -250,7 +250,7 @@ function Start-LTProcess
         {
             if($process.HasExited)
             {
-				if(!$Silent)
+				if($Silent)
 				{
 					Write-Output "The $($FilePath.Substring($FilePath.LastIndexOf('\') + 1)) file did not install, please install manually."
 				}
@@ -258,7 +258,7 @@ function Start-LTProcess
             else
             {
                 $process.Kill()
-				if(!$Silent)
+				if($Silent)
 				{
 					Write-Output "The $($FilePath.Substring($FilePath.LastIndexOf('\') + 1)) file did not install, please install manually."
 				}
