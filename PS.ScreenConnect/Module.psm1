@@ -267,5 +267,6 @@ function Start-LTProcess
     }
     End
     {
+		Write-Verbose "The cmdlet has reach the end."
     }
 }
